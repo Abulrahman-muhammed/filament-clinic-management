@@ -26,4 +26,17 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    // booted    protected static function booted()
+    protected static function booted()
+    {
+        static::creating(function ($appointment) {
+            $appointment->created_by = auth()->id() ?? null;
+        });
+    }
 }

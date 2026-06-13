@@ -12,19 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('patients', function (Blueprint $table) {
-            $table->id();
-                $table->string('name');
+        $table->id();
 
-            $table->string('email')->nullable();
+        $table->string('name');
+        $table->string('phone', 20)->unique();
 
-            $table->string('phone');
+        $table->tinyInteger('gender'); //TODO: Use enum
 
-            $table->enum('gender', ['male', 'female']);
+        $table->date('birth_date')->nullable();
 
-            $table->date('date_of_birth')->nullable();
+        $table->string('address')->nullable();
 
-            $table->text('address')->nullable();
-            $table->timestamps();
+        $table->text('notes')->nullable();
+
+        $table->foreignId('created_by')
+            ->nullable()
+            ->constrained('users')
+            ->nullOnDelete();
+
+        $table->timestamps();
         });
     }
 
