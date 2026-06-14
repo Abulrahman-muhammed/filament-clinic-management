@@ -31,7 +31,10 @@ class Appointment extends Model
     {
         return $this->belongsTo(Service::class);
     }
-
+    public function visit()
+    {
+        return $this->hasOne(Visit::class);
+    }
     // booted    protected static function booted()
     protected static function booted()
     {

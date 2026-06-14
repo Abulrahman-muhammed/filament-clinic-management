@@ -21,7 +21,7 @@ return new class extends Migration
         $table->string('medicine_name');
 
         $table->string('dosage')->nullable();
-
+        $table->string('frequency')->nullable();
         $table->string('duration')->nullable();
 
         $table->text('instructions')->nullable();

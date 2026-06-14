@@ -15,6 +15,7 @@ return new class extends Migration
         $table->id();
 
         $table->foreignId('visit_id')
+            ->unique()
             ->constrained()
             ->cascadeOnDelete();
 

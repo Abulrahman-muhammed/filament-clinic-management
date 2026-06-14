@@ -22,4 +22,15 @@ enum AppointmentStatus:int
             self::NoShow => 'No Show',
         };
     }
+        public function color(): string
+    {
+        return match ($this) {
+            self::Pending => 'warning',
+            self::Confirmed => 'info',
+            self::CheckedIn => 'success',
+            self::Completed => 'gray',
+            self::Cancelled => 'danger',
+            self::NoShow => 'danger',
+        };
+    }
 }
