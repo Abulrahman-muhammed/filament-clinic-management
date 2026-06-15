@@ -12,6 +12,12 @@ use App\Enums\VisitStatus;
 use Filament\Actions\Action;
 use App\Models\Prescription;
 use App\Filament\Resources\Prescriptions\PrescriptionResource;
+use App\Models\Payment;
+use App\Enums\PaymentStatus;
+use App\Enums\PaymentMethod;
+use App\Filament\Resources\Payments\PaymentResource;
+use App\Filament\Resources\Visits\VisitResource;
+
 class VisitsTable
 {
     public static function configure(Table $table): Table
@@ -63,7 +69,30 @@ class VisitsTable
                         );
                     }),
 
+            Action::make('createPayment')
+            ->label('Payment')
+            ->icon('heroicon-o-banknotes')
+            ->color('primary')
+            ->requiresConfirmation()
+            ->visible(fn ($record) => ! $record->payment)
+            ->action(function ($record) {
+
+                $payment = Payment::create([
+                    'visit_id' => $record->id,
+                    'amount' => $record->appointment->service->price ?? 0,
+                    'status' => PaymentStatus::Pending->value,
+                    'payment_method' => PaymentMethod::Cash->value,
+                ]);
+
+                redirect(
+                    PaymentResource::getUrl(
+                        'edit',
+                        ['record' => $payment]
+                    )
+                );
+            }),
             ])
+
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

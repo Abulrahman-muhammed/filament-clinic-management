@@ -28,11 +28,25 @@ class Patient extends Model
         return $this->hasMany(Appointment::class);
     }
 
-    public function prescriptions()
+    public function visits()
     {
-        return $this->hasMany(Prescription::class);
+        return $this->hasMany(Visit::class);
     }
 
+    public function prescriptions()
+    {
+        return $this->hasManyThrough(
+            Prescription::class,
+            Visit::class
+        );
+    }
+    public function payments()
+    {
+        return $this->hasManyThrough(
+            Payment::class,
+            Visit::class
+        );
+    }
         protected static function booted()
     {
         static::creating(function ($patient) {

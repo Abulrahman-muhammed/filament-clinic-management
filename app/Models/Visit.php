@@ -23,8 +23,15 @@ public function appointment()
     return $this->belongsTo(Appointment::class);
 }
 
-public function prescriptions()
+public function prescription()
 {
-    return $this->hasMany(Prescription::class);
+    return $this->hasOne(Prescription::class);
 }
+
+public function payment()
+{
+    return $this->hasOne(Payment::class);
+}
+
+
 }

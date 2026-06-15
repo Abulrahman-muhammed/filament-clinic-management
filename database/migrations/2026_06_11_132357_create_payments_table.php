@@ -15,10 +15,12 @@ return new class extends Migration
         $table->id();
 
         $table->foreignId('visit_id')
+            ->unique()
             ->constrained()
             ->cascadeOnDelete();
 
-        $table->decimal('amount', 10, 2);
+            $table->decimal('amount', 10, 2);
+            $table->tinyInteger('payment_method');
 
         $table->tinyInteger('status');
 

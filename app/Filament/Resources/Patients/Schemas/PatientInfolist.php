@@ -4,7 +4,7 @@ namespace App\Filament\Resources\Patients\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
-
+use App\Enums\Gender;
 class PatientInfolist
 {
     public static function configure(Schema $schema): Schema
@@ -14,7 +14,7 @@ class PatientInfolist
                 TextEntry::make('name'),
                 TextEntry::make('phone'),
                 TextEntry::make('gender')
-                    ->formatStateUsing(fn ($state) => $state ? \App\Enums\Gender::from($state)->label() : null),
+                    ->formatStateUsing(fn ($state) => $state ? Gender::from($state)->label() : null),
                 TextEntry::make('birth_date')
                     ->label('Age')
                     ->formatStateUsing(fn ($state) => $state?->age)
