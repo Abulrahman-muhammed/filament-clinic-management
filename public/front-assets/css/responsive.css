@@ -1,0 +1,197 @@
+/* =============================================
+   Clinic Booking — Responsive Styles
+   ============================================= */
+
+@media (max-width: 991.98px) {
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.65rem;
+  }
+
+  .navbar-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    width: 100%;
+  }
+
+  .navbar-actions .btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .wizard-step {
+    min-width: 100px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .step-label {
+    display: none;
+  }
+
+  .wizard-step.active .step-label {
+    display: inline;
+  }
+
+  .doctor-info {
+    padding: 1.5rem;
+  }
+
+  .ai-card {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-title {
+    font-size: 1.85rem;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .hero-actions .btn-lg {
+    padding: 0.65rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .section-padding {
+    padding: 3.5rem 0;
+  }
+
+  .stat-number {
+    font-size: 1.4rem;
+  }
+
+  .stat-card {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .wizard-steps {
+    gap: 0.25rem;
+  }
+
+  .wizard-step {
+    min-width: auto;
+    flex: 0 0 auto;
+    padding: 0.35rem;
+  }
+
+  .wizard-step::after {
+    display: none;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .booking-card .card-body {
+    padding: 1.25rem !important;
+  }
+
+  .date-picker-grid {
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  }
+
+  .slots-grid {
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+  }
+
+  .success-actions .btn {
+    width: 100%;
+  }
+
+  .payment-card-content {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .summary-value {
+    text-align: right;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero-illustration {
+    padding: 1rem 0;
+  }
+
+  .hero-badge {
+    font-size: 0.75rem;
+  }
+
+  .brand-text {
+    font-size: 1rem;
+  }
+
+  .contact-info-card {
+    padding: 1.25rem;
+  }
+
+  .footer-brand {
+    justify-content: center;
+  }
+
+  .site-footer .col-lg-4 {
+    text-align: center;
+  }
+
+  .footer-desc {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .navbar-nav {
+    gap: 0.25rem;
+  }
+}
+
+@media print {
+  .navbar,
+  .site-footer,
+  .wizard-steps,
+  .wizard-nav,
+  .success-actions,
+  #contact,
+  #statistics,
+  #doctor,
+  #services,
+  #ai-assistant {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .booking-card {
+    box-shadow: none;
+    border: none;
+  }
+
+  #bookingSuccess {
+    display: block !important;
+  }
+}

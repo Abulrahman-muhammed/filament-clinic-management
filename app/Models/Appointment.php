@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 class Appointment extends Model
 {
     protected $guarded = [];
@@ -42,4 +43,7 @@ class Appointment extends Model
             $appointment->created_by = auth()->id() ?? null;
         });
     }
+
+
 }
+

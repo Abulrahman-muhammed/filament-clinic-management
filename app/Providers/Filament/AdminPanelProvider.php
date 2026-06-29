@@ -56,6 +56,19 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->navigationGroups([
+                'Patients Management',
+                'Scheduling',
+                'Clinic Setup',
+                'Settings',
+
+
+
+            ])
+            ;
     }
+
+
+
 }

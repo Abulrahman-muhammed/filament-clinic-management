@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" fill="none" role="img" aria-label="13E *H6J-J 7(J">
+  <rect width="520" height="420" rx="24" fill="#F8FAF9"/>
+  <!-- Background circles -->
+  <circle cx="400" cy="80" r="60" fill="#C7F9CC" opacity="0.5"/>
+  <circle cx="100" cy="320" r="45" fill="#C7F9CC" opacity="0.35"/>
+  <circle cx="420" cy="340" r="30" fill="#14532D" opacity="0.08"/>
+  <!-- Medical cross -->
+  <rect x="230" y="140" width="60" height="160" rx="8" fill="#14532D"/>
+  <rect x="180" y="190" width="160" height="60" rx="8" fill="#14532D"/>
+  <!-- Heart pulse line -->
+  <path d="M60 260 L100 260 L120 200 L150 320 L180 220 L210 260 L460 260" stroke="#1F7A5A" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Stethoscope -->
+  <circle cx="380" cy="180" r="28" stroke="#1F7A5A" stroke-width="3" fill="none"/>
+  <path d="M352 180 C340 180 330 200 330 220 C330 250 350 270 380 270 C410 270 430 250 430 220 C430 200 420 180 408 180" stroke="#1F7A5A" stroke-width="3" fill="none"/>
+  <circle cx="380" cy="270" r="8" fill="#14532D"/>
+  <!-- Calendar icon -->
+  <rect x="60" y="100" width="80" height="70" rx="8" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+  <rect x="60" y="100" width="80" height="20" rx="8" fill="#14532D"/>
+  <circle cx="80" cy="145" r="5" fill="#C7F9CC"/>
+  <circle cx="100" cy="145" r="5" fill="#C7F9CC"/>
+  <circle cx="120" cy="145" r="5" fill="#1F7A5A"/>
+  <circle cx="80" cy="160" r="5" fill="#C7F9CC"/>
+  <circle cx="100" cy="160" r="5" fill="#198754"/>
+  <!-- Shield -->
+  <path d="M440 100 L470 115 L470 155 C470 180 455 200 440 210 C425 200 410 180 410 155 L410 115 Z" fill="#C7F9CC" stroke="#1F7A5A" stroke-width="2"/>
+  <path d="M430 160 L438 168 L452 148" stroke="#14532D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

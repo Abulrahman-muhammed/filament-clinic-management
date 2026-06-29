@@ -11,6 +11,7 @@ use App\Filament\Resources\DoctorSchedules\Schemas\DoctorScheduleInfolist;
 use App\Filament\Resources\DoctorSchedules\Tables\DoctorSchedulesTable;
 use App\Models\DoctorSchedule;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,7 +20,8 @@ use Filament\Tables\Table;
 class DoctorScheduleResource extends Resource
 {
     protected static ?string $model = DoctorSchedule::class;
-
+    protected static string|UnitEnum|null $navigationGroup = 'Clinic Setup';
+    protected static ?int $navigationSort = 2;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendar;
 
     public static function form(Schema $schema): Schema

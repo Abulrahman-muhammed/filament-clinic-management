@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 320" fill="none" role="img" aria-label="5H1) 'D7(J(">
+  <rect width="280" height="320" rx="16" fill="#F8FAF9"/>
+  <!-- Background -->
+  <circle cx="140" cy="120" r="80" fill="#C7F9CC" opacity="0.4"/>
+  <!-- Body -->
+  <ellipse cx="140" cy="280" rx="90" ry="30" fill="#E5E7EB"/>
+  <!-- Coat -->
+  <path d="M70 200 L70 280 L210 280 L210 200 L180 170 L100 170 Z" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+  <!-- Tie -->
+  <path d="M130 170 L140 220 L150 170 Z" fill="#14532D"/>
+  <!-- Neck -->
+  <rect x="125" y="145" width="30" height="30" rx="4" fill="#FDDCB5"/>
+  <!-- Head -->
+  <circle cx="140" cy="110" r="45" fill="#FDDCB5"/>
+  <!-- Hair -->
+  <path d="M95 105 C95 60 185 60 185 105 C185 85 165 70 140 70 C115 70 95 85 95 105" fill="#1F2937"/>
+  <!-- Eyes -->
+  <circle cx="125" cy="110" r="4" fill="#1F2937"/>
+  <circle cx="155" cy="110" r="4" fill="#1F2937"/>
+  <!-- Smile -->
+  <path d="M128 125 Q140 135 152 125" stroke="#1F2937" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Stethoscope -->
+  <circle cx="175" cy="195" r="12" stroke="#1F7A5A" stroke-width="2" fill="none"/>
+  <path d="M163 195 C155 195 148 210 148 225" stroke="#1F7A5A" stroke-width="2" fill="none"/>
+  <!-- Badge -->
+  <circle cx="140" cy="240" r="14" fill="#14532D"/>
+  <path d="M133 240 L138 245 L148 233" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

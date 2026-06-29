@@ -15,11 +15,17 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use App\Filament\Resources\Patients\RelationManagers\AppointmentsRelationManager;
+use App\Filament\Resources\Patients\RelationManagers\VisitsRelationManager;
+use App\Filament\Resources\Patients\RelationManagers\PaymentsRelationManager;
+use App\Filament\Resources\Patients\RelationManagers\PrescriptionsRelationManager;
+use UnitEnum;
 
 class PatientResource extends Resource
 {
     protected static ?string $model = Patient::class;
-
+    protected static string|UnitEnum|null $navigationGroup = 'Patients Management';
+    protected static ?int $navigationSort = 1;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
     protected static ?string $recordTitleAttribute = 'name';
@@ -43,7 +49,10 @@ class PatientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AppointmentsRelationManager::class,
+            VisitsRelationManager::class,
+            PaymentsRelationManager::class,
+            PrescriptionsRelationManager::class,
         ];
     }
 
