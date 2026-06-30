@@ -15,6 +15,9 @@ class AiController extends Controller
 {
     public function index(ClinicSettings $clinicSettings)
     {
+        if(!$clinicSettings->allow_ai) {
+            abort(404);
+        }
         $services = Service::where('is_active', true)->orderBy('name')->get();
 
         return view('user.ai.index', compact('services', 'clinicSettings'));

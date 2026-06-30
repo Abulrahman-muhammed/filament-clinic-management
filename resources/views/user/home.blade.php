@@ -227,13 +227,13 @@
                     <strong>تنبيه:</strong>
                     المساعد الذكي لا يقدم تشخيصاً طبياً، وإنما يساعدك في اختيار الخدمة المناسبة وإتمام الحجز فقط.
                 </div>
-
-                <a href="{{ route('user.assistant.index') }}"
-                   class="btn btn-primary btn-lg rounded-pill px-5 mt-3">
-                    <i class="bi bi-robot me-2"></i>
-                    ابدأ المحادثة
-                </a>
-
+              @if($clinicSettings->allow_ai == 1)
+                  <a href="{{ route('user.assistant.index') }}"
+                    class="btn btn-primary btn-lg rounded-pill px-5 mt-3">
+                      <i class="bi bi-robot me-2"></i>
+                      ابدأ المحادثة
+                  </a>
+              @endif
             </div>
 
         </div>
