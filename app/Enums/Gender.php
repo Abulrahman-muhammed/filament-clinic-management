@@ -14,6 +14,15 @@ enum Gender:int
             self::Female => 'Female',
         };
     }
+
+    // ar label
+    public function arlabel(): string
+    {
+        return match($this) {
+            self::Male => 'ذكر',
+            self::Female => 'انثى',
+        };
+    }
     public function color(): string
     {
         return match($this) {

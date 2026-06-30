@@ -93,7 +93,7 @@
                             alt="د. {{ $clinicSettings->doctor_name }}" class="img-fluid">
                     @endif
                   <span class="availability-badge">
-                    @if($doctorSchedule->is_available_today)
+                    @if(!empty($doctorSchedule->is_available_today))
                       <i class="bi bi-circle-fill text-success"></i> 
                       {{ $doctorSchedule->start_time_formatted }}  {{ $doctorSchedule->end_time_formatted }} متاح اليوم 
                     @else
@@ -128,7 +128,7 @@
                       <span>رسوم الاستشارة: {{ $clinicSettings->consultation_fee }} ج.م</span>
                     </div>
                   </div>
-                  <a href="#booking" class="btn btn-primary mt-3">
+                  <a href="{{ route('user.booking.index') }}" class="btn btn-primary mt-3">
                     <i class="bi bi-calendar-plus me-2"></i>احجز مع هذا الطبيب
                   </a>
                 </div>
@@ -168,70 +168,78 @@
     </div>
   </section>
 
-  <!-- ========== AI ASSISTANT ========== -->
-  <section id="ai-assistant" class="section-padding">
+<!-- ===================== AI ASSISTANT ===================== -->
+<section id="ai-assistant" class="section-padding">
     <div class="container">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6">
-          <div class="section-header mb-4">
-            <span class="section-badge">مساعد ذكي</span>
-            <h2 class="section-title">المساعد الطبي الذكي</h2>
-            <p class="section-subtitle">
-              يساعدك الذكاء الاصطناعي قبل الحجز لاختيار الخدمة والموعد الأنسب لك
-            </p>
-          </div>
-          <ul class="ai-features-list">
-            <li><i class="bi bi-check-circle-fill"></i> يقترح الخدمة الأنسب لحالتك</li>
-            <li><i class="bi bi-check-circle-fill"></i> يساعدك في اختيار أقرب موعد متاح</li>
-            <li><i class="bi bi-check-circle-fill"></i> يجيب على الأسئلة الشائعة عن العيادة</li>
-            <li><i class="bi bi-check-circle-fill"></i> يشرح خدمات الطبيب بالتفصيل</li>
-            <li><i class="bi bi-check-circle-fill"></i> يقدم إرشادات خطوة بخطوة للحجز</li>
-          </ul>
-          <div class="ai-notice">
-            <i class="bi bi-exclamation-triangle-fill"></i>
-            <p>
-              <strong>تنبيه مهم:</strong> المساعد الذكي لا يقدم تشخيصاً طبياً.
-              دوره يقتصر على مساعدتك أثناء عملية الحجز فقط.
-            </p>
-          </div>
-          <button type="button" class="btn btn-primary btn-lg mt-3" id="startAiAssistant">
-            <i class="bi bi-robot me-2"></i>ابدأ المساعد الذكي
-          </button>
-        </div>
-        <div class="col-lg-6">
-          <div class="ai-card">
-            <div class="ai-card-header">
-              <div class="ai-avatar">
-                <i class="bi bi-robot"></i>
-              </div>
-              <div>
-                <h4>مساعد العيادة الذكي</h4>
-                <span class="ai-status"><i class="bi bi-circle-fill"></i> متصل الآن</span>
-              </div>
-            </div>
-            <div class="ai-card-body">
-              <div class="ai-message ai-message-bot">
-                <p>مرحباً! كيف يمكنني مساعدتك في حجز موعدك اليوم؟</p>
-              </div>
-              <div class="ai-message ai-message-user">
-                <p>أريد استشارة طبية عامة</p>
-              </div>
-              <div class="ai-message ai-message-bot">
-                <p>بناءً على طلبك، أنصح بخدمة <strong>الاستشارة الطبية</strong> — مدتها 45 دقيقة. هل تريد المتابعة للحجز؟</p>
-              </div>
-            </div>
-            <div class="ai-card-footer">
-              <div class="ai-input-placeholder">
-                <i class="bi bi-chat-dots"></i>
-                <span>اكتب رسالتك هنا...</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8 text-center">
+
+                <span class="section-badge">
+                    <i class="bi bi-stars me-1"></i>
+                    AI Powered
+                </span>
+
+                <h2 class="section-title mt-3">
+                    المساعد الطبي الذكي
+                </h2>
+
+                <p class="section-subtitle mx-auto" style="max-width:700px;">
+                    تحدث مع المساعد الذكي قبل الحجز ليساعدك في اختيار الخدمة المناسبة،
+                    والإجابة عن استفساراتك، وعرض أقرب المواعيد المتاحة داخل العيادة.
+                </p>
+
+                <div class="row g-3 mt-5 text-start">
+
+                    <div class="col-md-6">
+                        <div class="ai-feature">
+                            <i class="bi bi-heart-pulse-fill text-primary"></i>
+                            <span>اقتراح الخدمة المناسبة لحالتك.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="ai-feature">
+                            <i class="bi bi-calendar-check-fill text-primary"></i>
+                            <span>عرض أقرب المواعيد المتاحة.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="ai-feature">
+                            <i class="bi bi-chat-dots-fill text-primary"></i>
+                            <span>الإجابة عن أسئلة العيادة والخدمات.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="ai-feature">
+                            <i class="bi bi-lightning-charge-fill text-primary"></i>
+                            <span>مساعدتك حتى إتمام الحجز.</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="alert alert-warning mt-5 rounded-4 border-0">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>تنبيه:</strong>
+                    المساعد الذكي لا يقدم تشخيصاً طبياً، وإنما يساعدك في اختيار الخدمة المناسبة وإتمام الحجز فقط.
+                </div>
+
+                <a href="{{ route('user.assistant.index') }}"
+                   class="btn btn-primary btn-lg rounded-pill px-5 mt-3">
+                    <i class="bi bi-robot me-2"></i>
+                    ابدأ المحادثة
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
   <!-- ========== BOOKING WIZARD ========== -->
 
 
@@ -297,3 +305,33 @@
   </section>
 
 @endsection
+
+@push('styles')
+  <style>
+    .ai-feature{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:18px;
+    background:#fff;
+    border-radius:16px;
+    border:1px solid #eef2f7;
+    transition:.3s;
+    box-shadow:0 10px 25px rgba(0,0,0,.04);
+}
+
+.ai-feature:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.ai-feature i{
+    font-size:28px;
+    flex-shrink:0;
+}
+
+.ai-feature span{
+    font-weight:600;
+}
+</style>
+@endpush

@@ -10,7 +10,7 @@ class SlotGeneratorService
 {
     public function generate(string $date): array
     {
-        $dayNumber = Carbon::parse($date)->dayOfWeek;
+        $dayNumber = Carbon::parse($date)->dayOfWeekIso;
     
         $schedule = DoctorSchedule::query()
             ->where('day_of_week', $dayNumber)

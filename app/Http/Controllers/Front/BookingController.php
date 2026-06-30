@@ -2,123 +2,79 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Exceptions\SlotAlreadyBookedException;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Service;
-use App\Models\Appointment;
-use App\Models\Patient;
-use  App\Settings\ClinicSettings;
 use App\Http\Requests\BookingRequest;
-use App\Services\SlotGeneratorService;
+use App\Http\Requests\BookingSlotsRequest;
 use App\Models\DoctorSchedule;
+use App\Models\Service;
+use App\Services\Booking\AvailableDateService;
+use App\Services\Booking\BookingService;
+use App\Services\Booking\PatientLookupService;
+use App\Services\SlotGeneratorService;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+
 class BookingController extends Controller
 {
-   public function index()
+    public function index(AvailableDateService $availableDateService): View
     {
-        $clinicSettings = app(ClinicSettings::class);
-        $services       = Service::orderBy('name')->get();
-        $schedules      = DoctorSchedule::orderBy('day_of_week')->where('is_active', true)->get();
-        $doctorSchedule = DoctorSchedule::where('is_active', true)->where('day_of_week', Carbon::today()->dayOfWeekIso)->first();
- $availableDates = collect();
+        $schedules = DoctorSchedule::orderBy('day_of_week')
+            ->where('is_active', true)
+            ->get();
 
-foreach ($schedules as $s) {
-    $dayOfWeek = \App\Enums\DayOfWeek::from($s->day_of_week); // e.g. "monday"
-    
-    // الـ next occurrence من النهارده
-    $date = now()->startOfDay();
-    
-    // لو النهارده نفس اليوم، ابدأ من بكره
-    $targetDow = $dayOfWeek->carbonDayOfWeek(); // method هتضيفها
-    
-    $daysUntil = ($targetDow - $date->dayOfWeek + 7) % 7;
-    if ($daysUntil === 0) $daysUntil = 7; // مش النهارده نفسه
-    
-    $date->addDays($daysUntil);
-    
-    $availableDates->push([
-        'date'      => $date->format('Y-m-d'),
-        'day_name'  => $dayOfWeek->arLabel(),
-        'formatted' => $date->translatedFormat('j M'), // أو format عادي
-        'start_fmt' => \Carbon\Carbon::parse($s->start_time)->format('g A'),
-        'end_fmt'   => \Carbon\Carbon::parse($s->end_time)->format('g A'),
-        'schedule'  => $s,
-    ]);
-}
-
-// مرتبة بالتاريخ
-$availableDates = $availableDates->sortBy('date')->values();
-        return view('user.booking.index', compact(
-            'clinicSettings',
-            'services',
-            'schedules',
-            'doctorSchedule',
-            'availableDates',
-        ));
-    }
- 
-    /**
-     * Return available time slots for a given date (AJAX).
-     * GET /booking/slots?date=2025-06-15
-     */
-    public function slots(Request $request, SlotGeneratorService $generator)
-    {
-        $request->validate([
-            'date' => ['required', 'date', 'after_or_equal:today'],
+        return view('user.booking.index', [
+            'services'       => Service::where('is_active', true)->orderBy('name')->get(),
+            'schedules'      => $schedules,
+            'doctorSchedule' => $schedules->firstWhere('day_of_week', Carbon::today()->dayOfWeekIso),
+            'availableDates' => $availableDateService->generate($schedules),
         ]);
- 
-        $slots = $generator->generateForApi($request->date);
- 
+    }
+
+    public function slots(BookingSlotsRequest $request, SlotGeneratorService $generator): JsonResponse
+    {
         return response()->json([
-            'slots' => $slots,   // [['value'=>'09:00:00','label'=>'09:00 AM'], ...]
+            'slots' => $generator->generateForApi($request->validated('date')),
         ]);
     }
- 
-    /**
-     * Store a new appointment.
-     * All validation is handled by BookingRequest — no manual validation needed here.
-     */
-    public function store(BookingRequest $request): RedirectResponse
+
+    public function store(BookingRequest $request, BookingService $bookingService): RedirectResponse
     {
-        $data = $request->validated();
- 
-        // ── Duplicate-slot check ──────────────────────────────────────────
-        $conflict = Appointment::where('appointment_date', $data['appointment_date'])
-            ->where('appointment_time', $data['appointment_time'])
-            ->whereNotIn('status', ['cancelled'])
-            ->exists();
- 
-        if ($conflict) {
+        try {
+            $bookingService->book($request->validated());
+
+            return redirect()
+                ->route('user.booking.index')
+                ->with('success', 'تم تأكيد حجزك بنجاح! سنتواصل معك قريباً.');
+
+        } catch (SlotAlreadyBookedException $e) {
             return back()
                 ->withInput()
-                ->with('error', 'هذا الموعد محجوز بالفعل. يرجى اختيار وقت آخر.');
+                ->with('error', $e->getMessage());
         }
- 
-        // ── Create the appointment ────────────────────────────────────────
-        Appointment::create([
-            'user_id'            => auth()->id(),
-            'service_id'         => $data['service_id'],
-            'patient_name'       => $data['patient_name'],
-            'patient_phone'      => $data['patient_phone'],
-            'patient_email'      => $data['patient_email'],
-            'patient_dob'        => $data['patient_dob']         ?? null,
-            'patient_gender'     => $data['patient_gender']      ?? null,
-            'patient_blood_type' => $data['patient_blood_type']  ?? null,
-            'patient_notes'      => $data['patient_notes']       ?? null,
-            'appointment_date'   => $data['appointment_date'],
-            'appointment_time'   => $data['appointment_time'],
-            'payment_method'     => $data['payment_method'],
-            'status'             => 'pending',
+    }
+
+    public function patientLookup(Request $request, PatientLookupService $patientService): JsonResponse
+    {
+        $request->validate(['phone' => ['required']]);
+
+        $patient = $patientService->lookup($request->phone);
+
+        if (! $patient) {
+            return response()->json(['exists' => false]);
+        }
+
+        return response()->json([
+            'exists'  => true,
+            'patient' => [
+                'name'       => $patient->name,
+                'address'    => $patient->address,
+                'birth_date' => optional($patient->birth_date)->format('Y-m-d'),
+                'gender'     => $patient->gender,
+            ],
         ]);
- 
-        // ── Payment redirect (card) ───────────────────────────────────────
-        if ($data['payment_method'] === 'card') {
-            // TODO: initiate Stripe / Paymob session and redirect
-            // return redirect($checkoutUrl);
-        }
- 
-        return redirect()
-            ->route('user.booking.index')
-            ->with('success', 'تم تأكيد حجزك بنجاح! سنتواصل معك قريباً.');
     }
 }

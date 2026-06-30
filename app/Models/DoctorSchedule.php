@@ -23,8 +23,7 @@ class DoctorSchedule extends Model
     // accessor to get if doctor is available for the appointment date and time
     public function getIsAvailableTodayAttribute(): bool
     {
-        return $this->is_active
-            && $this->day_of_week === Carbon::today()->dayOfWeekIso;
+        return $this->is_active && $this->day_of_week === Carbon::today()->dayOfWeekIso ; 
     }
 
     // accessor to get the start time in 12 hour format
