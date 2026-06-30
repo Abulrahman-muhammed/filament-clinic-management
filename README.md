@@ -1,90 +1,148 @@
+# AI-Powered Clinic Management System
 
-# Filament Clinic Management System
+A modern clinic management system built with **Laravel 12** and **Filament**, featuring an AI-powered medical assistant, online appointment booking, patient management, and a complete administration dashboard.
 
-A production-grade clinic management platform built with Laravel and Filament v5, featuring an AI-powered medical assistant, a multi-step appointment booking flow, and a role-aware admin panel for clinic staff.
+---
 
-<!-- Add a hero screenshot or GIF here, e.g. ![Dashboard](docs/screenshots/dashboard.png) -->
+## Features
 
-## Overview
+### 🤖 AI Medical Assistant
+- Integrated Google Gemini API.
+- Generates dynamic prompts from clinic services, schedules, and settings.
+- Recommends suitable clinic services.
+- Answers clinic-related questions.
+- Displays available appointment slots.
+- Guides patients through the booking process.
 
-This project was built as a graduation thesis (Faculty of Computers and Information, Tanta University) but designed and implemented to production-quality standards rather than as a throwaway academic prototype. It covers the full lifecycle of a single-doctor clinic: patients discover services, chat with an AI assistant for guidance, book appointments through a guided wizard, and clinic staff manage everything from a Filament-powered admin dashboard.
+### 📅 Appointment Booking
+- Dynamic appointment scheduling.
+- Slot availability based on doctor's schedule.
+- Double-booking prevention.
+- Returning patient lookup by phone number.
+- Multi-step booking wizard.
+- Arabic-first user interface.
 
-## Key Features
+### 👨‍⚕️ Patient Management
+- Patient profiles.
+- Appointment history.
+- Automatic patient lookup.
+- Patient information updates.
 
-### AI Medical Assistant
-- Conversational chatbot powered by the Gemini API (`gemini-2.5-flash`), with structured prompts built dynamically from live clinic data (services, pricing, doctor schedule, availability).
-- Help User For Booking And View Avilable Booking Times.
+### ⚙️ Admin Dashboard
+- Built with Filament.
+- Patient management.
+- Appointment management.
+- Doctor schedule management.
+- Services management.
+- Dashboard statistics.
+- Clinic settings.
 
-### Appointment Booking
-- Multi-step, server-rendered booking wizard (Blade + Bootstrap 5 RTL, minimal vanilla JS — no Livewire/Vue/React dependency).
-- Server-side availability logic via a dedicated `AvailableDateService`, driven by doctor schedules rather than client-side date math.
-- Interactive service selection with live price totals.
-- Returning-patient phone lookup with debounce and auto-fill.
-- Egyptian phone number validation and Arabic-first UI.
+### 🔐 Authentication & Authorization
+- Role-Based Access Control (RBAC).
+- Spatie Laravel Permission.
+- Admin / Doctor / Receptionist roles.
 
-### Admin Panel (Filament v5)
-- Role-aware views and permissions for Admin, Doctor, and Receptionist roles, built on Spatie Laravel Permission.
-- Centralized, type-safe clinic configuration via Spatie Laravel Settings.
-- Visit, booking, and dashboard statistics tailored to each role.
-- Subscription lifecycle management with scheduled commands and database notifications.
+---
 
-## Tech Stack
+# Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Backend | Laravel <!-- e.g. 11.x --> |
-| Admin Panel | Filament v5 |
-| Frontend | Blade, Bootstrap 5 (RTL), vanilla JavaScript |
-| AI | Google Gemini API (`gemini-2.5-flash`) |
-| Settings | Spatie Laravel Settings |
+| Category | Technologies |
+|----------|--------------|
+| Backend | Laravel 12, PHP 8.2 |
+| Admin Panel | Filament |
+| Database | MySQL |
+| AI | Google Gemini API |
+| Frontend | Blade, Bootstrap 5, JavaScript |
 | Permissions | Spatie Laravel Permission |
-| Database | MySQL <!-- adjust if different --> |
+| Settings | Spatie Laravel Settings |
+| APIs | RESTful APIs |
+| Version Control | Git, GitHub |
 
-## Architecture Highlights
+---
 
-- **Server-first booking logic** — date and slot availability are computed entirely in `AvailableDateService` on the backend; the client only renders what the server decides, avoiding duplicated business logic in JavaScript.
-- **Dynamic AI context** — `PromptBuilderService` assembles the Gemini system prompt at request time from current services, schedules, and clinic settings, so the assistant's knowledge never drifts from the database.
-- **Thin controllers, focused services** — request handling, payload construction, and external API calls are separated into single-responsibility services (`GeminiService`, `PromptBuilderService`) rather than living inline in controllers.
+# Architecture
 
-## Screenshots
+The project follows a clean and maintainable architecture by separating business logic from controllers.
 
-### Patient Booking Wizard
-<img width="423" height="647" alt="Screenshot 2026-06-30 200807" src="https://github.com/user-attachments/assets/9d59e146-eab7-4f33-9ca2-bae09b27f13d" />
+### Highlights
 
-### AI Assistant
+- Service Layer Architecture
+- Form Requests Validation
+- Custom Exceptions
+- Enums
+- Repository-like Business Services
+- Dynamic AI Prompt Builder
+- Thin Controllers
+- Reusable Services
+
+Example Services:
+
+- BookingService
+- AvailableDateService
+- SlotGeneratorService
+- GeminiService
+- PromptBuilderService
+- PatientLookupService
+
+---
+
+# Screenshots
+
+## Home Page
+
+<img width="1482" height="788" alt="image" src="https://github.com/user-attachments/assets/719663b9-c281-4dcc-a3a7-751f418c6a85" />
+
+
+---
+
+## AI Assistant
+
 <img width="1070" height="703" alt="image" src="https://github.com/user-attachments/assets/705d3d02-8d74-4bcd-b483-0bc23ff1ba6e" />
 
-### Admin Dashboard
+---
+
+## Booking Wizard
+
+<img width="423" height="647" alt="Screenshot 2026-06-30 200807" src="https://github.com/user-attachments/assets/9d59e146-eab7-4f33-9ca2-bae09b27f13d" />
+
+
+---
+
+## Admin Dashboard
+
 <img width="1758" height="731" alt="image" src="https://github.com/user-attachments/assets/b3d286ec-15fa-46b3-970d-a253fb54bf7e" />
 
+---
 
+## Installation
 
-## Getting Started
-
-### Requirements
-
-- PHP <!-- e.g. ^8.2 -->
-- Composer
-- Node.js & npm
-- MySQL (or your configured database)
-- A Google Gemini API key
-
-### Installation
+Clone the repository
 
 ```bash
-git clone https://github.com/Abulrahman-muhammed/filament-clinic-management.git
-cd filament-clinic-management
+git clone https://github.com/your-username/clinic-management.git
+```
 
+Install dependencies
+
+```bash
 composer install
-npm install
 
+npm install
+```
+
+Copy environment file
+
+```bash
 cp .env.example .env
+```
+
+Generate application key
+
+```bash
 php artisan key:generate
 ```
 
-### Configuration
-
-Set your database credentials and Gemini API key in `.env`:
+Configure your database and Gemini API key inside `.env`
 
 ```env
 DB_CONNECTION=mysql
@@ -92,34 +150,40 @@ DB_DATABASE=clinic_management
 DB_USERNAME=root
 DB_PASSWORD=
 
-GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=YOUR_API_KEY
 ```
 
-### Database & Build
+Run migrations
 
 ```bash
 php artisan migrate --seed
+```
+
+Build frontend assets
+
+```bash
 npm run build
 ```
 
-### Run
+Start the application
 
 ```bash
 php artisan serve
 ```
 
-Visit `http://localhost:8000` for the patient-facing app, and `http://localhost:8000/admin` for the Filament admin panel.
+---
 
-## Roadmap
+# Future Improvements
 
-<!-- Optional: list any planned improvements, e.g. -->
-- [ ] Online payment integration
-- [ ] SMS/WhatsApp appointment reminders
-- [ ] Multi-doctor / multi-clinic support
+- Online Payment Integration
+- WhatsApp Notifications
+- Email Notifications
+- Multi-doctor Support
+- Multi-clinic Support
+- AI-powered Automatic Booking
 
+---
 
-## Author
+# Author
 
-**Abdulrahman Mohammed**
-Computer Science student, Faculty of Computers and Information, Tanta University
-<!-- Add LinkedIn / portfolio link here -->
+**Abdulrahman Muhammed**
