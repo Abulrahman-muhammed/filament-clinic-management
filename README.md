@@ -1,66 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Filament Clinic Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A production-grade clinic management platform built with Laravel and Filament v5, featuring an AI-powered medical assistant, a multi-step appointment booking flow, and a role-aware admin panel for clinic staff.
 
-## About Laravel
+<!-- Add a hero screenshot or GIF here, e.g. ![Dashboard](docs/screenshots/dashboard.png) -->
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project was built as a graduation thesis (Faculty of Computers and Information, Tanta University) but designed and implemented to production-quality standards rather than as a throwaway academic prototype. It covers the full lifecycle of a single-doctor clinic: patients discover services, chat with an AI assistant for guidance, book appointments through a guided wizard, and clinic staff manage everything from a Filament-powered admin dashboard.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Key Features
 
-## Learning Laravel
+### AI Medical Assistant
+- Conversational chatbot powered by the Gemini API (`gemini-2.5-flash`), with structured prompts built dynamically from live clinic data (services, pricing, doctor schedule, availability).
+- Specialty detection and doctor/service recommendations mapped to a `majors` table.
+- Urgency-level classification with color-coded responses.
+- Prescription image analysis via Gemini Vision.
+- Seamless handoff to the booking flow once the assistant determines the patient is ready (`[BOOKING_READY]` trigger).
+- Standalone Drug Interaction Checker with severity classification and session-based history.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Appointment Booking
+- Multi-step, server-rendered booking wizard (Blade + Bootstrap 5 RTL, minimal vanilla JS — no Livewire/Vue/React dependency).
+- Server-side availability logic via a dedicated `AvailableDateService`, driven by doctor schedules rather than client-side date math.
+- Interactive service selection with live price totals.
+- Returning-patient phone lookup with debounce and auto-fill.
+- Egyptian phone number validation and Arabic-first UI.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Admin Panel (Filament v5)
+- Role-aware views and permissions for Admin, Doctor, and Receptionist roles, built on Spatie Laravel Permission.
+- Centralized, type-safe clinic configuration via Spatie Laravel Settings.
+- Visit, booking, and dashboard statistics tailored to each role.
+- Subscription lifecycle management with scheduled commands and database notifications.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tech Stack
 
-## Laravel Sponsors
+| Layer | Technology |
+|---|---|
+| Backend | Laravel <!-- e.g. 11.x --> |
+| Admin Panel | Filament v5 |
+| Frontend | Blade, Bootstrap 5 (RTL), vanilla JavaScript |
+| AI | Google Gemini API (`gemini-2.5-flash`) |
+| Settings | Spatie Laravel Settings |
+| Permissions | Spatie Laravel Permission |
+| Database | MySQL <!-- adjust if different --> |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Architecture Highlights
 
-### Premium Partners
+- **Server-first booking logic** — date and slot availability are computed entirely in `AvailableDateService` on the backend; the client only renders what the server decides, avoiding duplicated business logic in JavaScript.
+- **Dynamic AI context** — `PromptBuilderService` assembles the Gemini system prompt at request time from current services, schedules, and clinic settings, so the assistant's knowledge never drifts from the database.
+- **Thin controllers, focused services** — request handling, payload construction, and external API calls are separated into single-responsibility services (`GeminiService`, `PromptBuilderService`) rather than living inline in controllers.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Screenshots
 
-## Contributing
+<!-- Add screenshots here, for example:
+### Patient Booking Wizard
+<img width="423" height="647" alt="image" src="https://github.com/user-attachments/assets/b2f4e864-c3fb-4b6f-8045-1aa331a87c89" />
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### AI Assistant
+<img width="1070" height="703" alt="image" src="https://github.com/user-attachments/assets/705d3d02-8d74-4bcd-b483-0bc23ff1ba6e" />
 
-## Code of Conduct
+### Admin Dashboard
+<img width="1758" height="731" alt="image" src="https://github.com/user-attachments/assets/b3d286ec-15fa-46b3-970d-a253fb54bf7e" />
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-->
 
-## Security Vulnerabilities
+## Getting Started
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Requirements
 
-## License
+- PHP <!-- e.g. ^8.2 -->
+- Composer
+- Node.js & npm
+- MySQL (or your configured database)
+- A Google Gemini API key
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Installation
+
+```bash
+git clone https://github.com/Abulrahman-muhammed/filament-clinic-management.git
+cd filament-clinic-management
+
+composer install
+npm install
+
+cp .env.example .env
+php artisan key:generate
+```
+
+### Configuration
+
+Set your database credentials and Gemini API key in `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_DATABASE=clinic_management
+DB_USERNAME=root
+DB_PASSWORD=
+
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### Database & Build
+
+```bash
+php artisan migrate --seed
+npm run build
+```
+
+### Run
+
+```bash
+php artisan serve
+```
+
+Visit `http://localhost:8000` for the patient-facing app, and `http://localhost:8000/admin` for the Filament admin panel.
+
+## Roadmap
+
+<!-- Optional: list any planned improvements, e.g. -->
+- [ ] Online payment integration
+- [ ] SMS/WhatsApp appointment reminders
+- [ ] Multi-doctor / multi-clinic support
+
+
+## Author
+
+**Abdulrahman Mohammed**
+Computer Science student, Faculty of Computers and Information, Tanta University
+<!-- Add LinkedIn / portfolio link here -->
