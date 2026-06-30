@@ -12,11 +12,7 @@ This project was built as a graduation thesis (Faculty of Computers and Informat
 
 ### AI Medical Assistant
 - Conversational chatbot powered by the Gemini API (`gemini-2.5-flash`), with structured prompts built dynamically from live clinic data (services, pricing, doctor schedule, availability).
-- Specialty detection and doctor/service recommendations mapped to a `majors` table.
-- Urgency-level classification with color-coded responses.
-- Prescription image analysis via Gemini Vision.
-- Seamless handoff to the booking flow once the assistant determines the patient is ready (`[BOOKING_READY]` trigger).
-- Standalone Drug Interaction Checker with severity classification and session-based history.
+- Help User For Booking And View Avilable Booking Times.
 
 ### Appointment Booking
 - Multi-step, server-rendered booking wizard (Blade + Bootstrap 5 RTL, minimal vanilla JS — no Livewire/Vue/React dependency).
