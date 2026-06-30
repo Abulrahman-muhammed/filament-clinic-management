@@ -1,3 +1,4 @@
+
 # Filament Clinic Management System
 
 A production-grade clinic management platform built with Laravel and Filament v5, featuring an AI-powered medical assistant, a multi-step appointment booking flow, and a role-aware admin panel for clinic staff.
@@ -47,9 +48,8 @@ This project was built as a graduation thesis (Faculty of Computers and Informat
 
 ## Screenshots
 
-<!-- Add screenshots here, for example:
 ### Patient Booking Wizard
-<img width="423" height="647" alt="image" src="https://github.com/user-attachments/assets/b2f4e864-c3fb-4b6f-8045-1aa331a87c89" />
+<img width="423" height="647" alt="Screenshot 2026-06-30 200807" src="https://github.com/user-attachments/assets/9d59e146-eab7-4f33-9ca2-bae09b27f13d" />
 
 ### AI Assistant
 <img width="1070" height="703" alt="image" src="https://github.com/user-attachments/assets/705d3d02-8d74-4bcd-b483-0bc23ff1ba6e" />
@@ -57,7 +57,7 @@ This project was built as a graduation thesis (Faculty of Computers and Informat
 ### Admin Dashboard
 <img width="1758" height="731" alt="image" src="https://github.com/user-attachments/assets/b3d286ec-15fa-46b3-970d-a253fb54bf7e" />
 
--->
+
 
 ## Getting Started
 
